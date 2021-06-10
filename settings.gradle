@@ -1,0 +1,3 @@
+rootProject.name = "FoldableActivity"
+include ':app'
+include ':foldable-activity'
