@@ -2,8 +2,8 @@ package com.whitedog.foldable_activity.utils
 
 import android.graphics.Rect
 import android.view.View
-import androidx.window.DisplayFeature
-import androidx.window.FoldingFeature
+import androidx.window.layout.DisplayFeature
+import androidx.window.layout.FoldingFeature
 import com.whitedog.foldable_activity.enums.FoldPosture
 
 object FlexModeHelper {
@@ -37,21 +37,21 @@ object FlexModeHelper {
     //-----------------------------------------------------------------------------------
 
     fun isFlat(foldFeature: FoldingFeature): Boolean {
-        return foldFeature.state == FoldingFeature.STATE_FLAT
+        return foldFeature.state == FoldingFeature.State.FLAT
     }
 
     fun isHalfOpen(foldFeature: FoldingFeature): Boolean {
-        return foldFeature.state == FoldingFeature.STATE_HALF_OPENED
+        return foldFeature.state == FoldingFeature.State.HALF_OPENED
     }
 
     //-----------------------------------------------------------------------------------
 
     private fun isTableTopPosture(foldFeature: FoldingFeature): Boolean {
-        return foldFeature.isSeparating && foldFeature.orientation == FoldingFeature.ORIENTATION_HORIZONTAL
+        return foldFeature.isSeparating && foldFeature.orientation == FoldingFeature.Orientation.HORIZONTAL
     }
 
     private fun isBookPosture(foldFeature: FoldingFeature): Boolean {
-        return foldFeature.isSeparating && foldFeature.orientation == FoldingFeature.ORIENTATION_VERTICAL
+        return foldFeature.isSeparating && foldFeature.orientation == FoldingFeature.Orientation.VERTICAL
     }
 
     //-----------------------------------------------------------------------------------

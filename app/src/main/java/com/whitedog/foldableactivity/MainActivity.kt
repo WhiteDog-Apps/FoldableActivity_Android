@@ -2,7 +2,7 @@ package com.whitedog.foldableactivity
 
 import android.os.Bundle
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.window.FoldingFeature
+import androidx.window.layout.FoldingFeature
 import com.whitedog.foldable_activity.enums.FoldPosture
 import com.whitedog.foldable_activity.ui.FoldableActivity
 import com.whitedog.foldable_activity.utils.FlexModeHelper
