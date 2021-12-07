@@ -7,8 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.window.layout.DisplayFeature
 import androidx.window.layout.FoldingFeature
-import androidx.window.layout.WindowInfoRepository
-import androidx.window.layout.WindowInfoRepository.Companion.windowInfoRepository
+import androidx.window.layout.WindowInfoTracker
 import com.whitedog.foldable_activity.enums.FoldPosture
 import com.whitedog.foldable_activity.utils.FlexModeHelper
 import kotlinx.coroutines.Dispatchers
@@ -17,19 +16,19 @@ import kotlinx.coroutines.launch
 
 abstract class FoldableActivity : AppCompatActivity() {
 
-    private lateinit var windowInfoRepo: WindowInfoRepository
+    private lateinit var windowInfoRepo: WindowInfoTracker
 
     //-----------------------------------------------------------------------------------
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        windowInfoRepo = windowInfoRepository()
+        windowInfoRepo = WindowInfoTracker.getOrCreate(this)
 
         lifecycleScope.launch(Dispatchers.Main) {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                windowInfoRepo.windowLayoutInfo.collect { newLayoutInfo ->
-                    for (displayFeature : DisplayFeature in newLayoutInfo.displayFeatures) {
+                windowInfoRepo.windowLayoutInfo(this@FoldableActivity).collect { newLayoutInfo ->
+                    for(displayFeature : DisplayFeature in newLayoutInfo.displayFeatures) {
                         val foldFeature: FoldingFeature? = displayFeature as? FoldingFeature
 
                         if(foldFeature != null) {

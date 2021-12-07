@@ -14,10 +14,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#ff0000"
-        app:layout_constraintEnd_toStartOf="@id/book_fold_guide"
+        app:layout_constraintEnd_toStartOf="@id/constraintLayout3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tabletop_fold_guide">
+        app:layout_constraintBottom_toTopOf="@id/constraintLayout2">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
