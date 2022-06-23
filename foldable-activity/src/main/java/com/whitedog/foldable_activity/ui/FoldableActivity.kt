@@ -1,6 +1,7 @@
 package com.whitedog.foldable_activity.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -11,7 +12,6 @@ import androidx.window.layout.WindowInfoTracker
 import com.whitedog.foldable_activity.enums.FoldPosture
 import com.whitedog.foldable_activity.utils.FlexModeHelper
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 abstract class FoldableActivity : AppCompatActivity() {
@@ -28,16 +28,17 @@ abstract class FoldableActivity : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.Main) {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 windowInfoRepo.windowLayoutInfo(this@FoldableActivity).collect { newLayoutInfo ->
-                    for(displayFeature : DisplayFeature in newLayoutInfo.displayFeatures) {
+                    for(displayFeature: DisplayFeature in newLayoutInfo.displayFeatures) {
                         val foldFeature: FoldingFeature? = displayFeature as? FoldingFeature
 
-                        if(foldFeature != null) {
-                            if(FlexModeHelper.isHalfOpen(foldFeature)) {
-                                onFoldableHalfOpen(foldFeature, FlexModeHelper.getPosture(foldFeature))
-                            }
-                            else if(FlexModeHelper.isFlat(foldFeature)){
-                                onFoldableFlat(foldFeature)
-                            }
+                        if(foldFeature == null) {
+                            onFoldablePostureChanged(FoldPosture.UNKNOWN, 0)
+                        }
+                        else {
+                            val foldPosture: FoldPosture = FlexModeHelper.getPosture(foldFeature)
+                            val foldPosition: Int = FlexModeHelper.getFoldPosition(getRootView(), foldFeature)
+
+                            onFoldablePostureChanged(foldPosture, foldPosition)
                         }
                     }
                 }
@@ -47,7 +48,8 @@ abstract class FoldableActivity : AppCompatActivity() {
 
     //-----------------------------------------------------------------------------------
 
-    abstract fun onFoldableFlat(foldFeature: FoldingFeature)
-    abstract fun onFoldableHalfOpen(foldFeature: FoldingFeature, foldPosture: FoldPosture)
+    abstract fun getRootView(): View
+
+    abstract fun onFoldablePostureChanged(foldPosture: FoldPosture, foldPositionFromEnd: Int)
 
 }
