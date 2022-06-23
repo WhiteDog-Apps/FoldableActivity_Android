@@ -55,15 +55,15 @@ class MainActivity: FoldableActivity() {
         return findViewById<ConstraintLayout>(R.id.motion_layout_guides_root)
     }
     
-    override fun updateUI(foldPosture: FoldPosture, position: Int) {
+    override fun onFoldablePostureChanged(foldPosture: FoldPosture, foldPositionFromEnd: Int) {
         when(foldPosture) {
             FoldPosture.TABLE_TOP -> {
-                ConstraintLayout.getSharedValues().fireNewValue(R.id.rg_motion_layout_guides_tabletop, position)
+                ConstraintLayout.getSharedValues().fireNewValue(R.id.rg_motion_layout_guides_tabletop, foldPositionFromEnd)
                 ConstraintLayout.getSharedValues().fireNewValue(R.id.rg_motion_layout_guides_book, 0)
             }
             FoldPosture.BOOK      -> {
                 ConstraintLayout.getSharedValues().fireNewValue(R.id.rg_motion_layout_guides_tabletop, 0)
-                ConstraintLayout.getSharedValues().fireNewValue(R.id.rg_motion_layout_guides_book, position)
+                ConstraintLayout.getSharedValues().fireNewValue(R.id.rg_motion_layout_guides_book, foldPositionFromEnd)
             }
             else                  -> {
                 ConstraintLayout.getSharedValues().fireNewValue(R.id.rg_motion_layout_guides_tabletop, 0)
