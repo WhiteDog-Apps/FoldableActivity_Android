@@ -17,7 +17,7 @@ allprojects {
 #### 2. Add the dependency
 ```gradle
 dependencies {
-    implementation 'com.github.WhiteDog-Apps:FoldableActivity:1.0.3'
+    implementation 'com.github.WhiteDog-Apps:FoldableActivity_Android:1.0.4'
 }
 ```
 
@@ -31,11 +31,11 @@ class MainActivity: FoldableActivity() {
 
 #### 2.  Implements members
 ```kotlin
-    override fun onFoldableFlat(foldFeature: FoldingFeature) {
-        // Update UI
+    override fun getRootView(): View {
+        // Return the view where you will control the fold
     }
 
-    override fun onFoldableHalfOpen(foldFeature: FoldingFeature, foldPosture: FoldPosture) {
+    override fun onFoldablePostureChanged(foldPosture: FoldPosture, foldPositionFromEnd: Int) {
         // Update UI
     }
 ```
@@ -51,21 +51,24 @@ class MainActivity: FoldableActivity() {
     }
 
     // 2. Implements members
-    override fun onFoldableFlat(foldFeature: FoldingFeature) {
-        ConstraintLayout.getSharedValues().fireNewValue(R.id.tabletop_fold_guide, 0)
-        ConstraintLayout.getSharedValues().fireNewValue(R.id.book_fold_guide, 0)
+    override fun getRootView(): View {
+        return findViewById<ConstraintLayout>(R.id.motion_layout_guides_root)
     }
-
-    override fun onFoldableHalfOpen(foldFeature: FoldingFeature, foldPosture: FoldPosture) {
-        val foldPosition: Int = FlexModeHelper.getFoldPosition(root, foldFeature)
-
-        val posture: FoldPosture = FlexModeHelper.getPosture(foldFeature)
-
-        if(posture == FoldPosture.TABLE_TOP) {
-            ConstraintLayout.getSharedValues().fireNewValue(R.id.tabletop_fold_guide, foldPosition)
-        }
-        else if(posture == FoldPosture.BOOK) {
-            ConstraintLayout.getSharedValues().fireNewValue(R.id.book_fold_guide, foldPosition)
+    
+    override fun updateUI(foldPosture: FoldPosture, position: Int) {
+        when(foldPosture) {
+            FoldPosture.TABLE_TOP -> {
+                ConstraintLayout.getSharedValues().fireNewValue(R.id.rg_motion_layout_guides_tabletop, position)
+                ConstraintLayout.getSharedValues().fireNewValue(R.id.rg_motion_layout_guides_book, 0)
+            }
+            FoldPosture.BOOK      -> {
+                ConstraintLayout.getSharedValues().fireNewValue(R.id.rg_motion_layout_guides_tabletop, 0)
+                ConstraintLayout.getSharedValues().fireNewValue(R.id.rg_motion_layout_guides_book, position)
+            }
+            else                  -> {
+                ConstraintLayout.getSharedValues().fireNewValue(R.id.rg_motion_layout_guides_tabletop, 0)
+                ConstraintLayout.getSharedValues().fireNewValue(R.id.rg_motion_layout_guides_book, 0)
+            }
         }
     }
 }
