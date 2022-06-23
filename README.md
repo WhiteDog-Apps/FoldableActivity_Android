@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/WhiteDog-Apps/FoldableActivity.svg)](https://jitpack.io/#WhiteDog-Apps/FoldableActivity)
+[![](https://jitpack.io/v/WhiteDog-Apps/FoldableActivity_Android.svg)](https://jitpack.io/#WhiteDog-Apps/FoldableActivity_Android)
 
 # FoldableActivity
 Android library that simplifies the logic necessary to detect state changes in foldable devices,
