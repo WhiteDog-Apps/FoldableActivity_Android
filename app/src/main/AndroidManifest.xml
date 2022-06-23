@@ -12,13 +12,23 @@
         android:theme="@style/Theme.FoldableActivity">
 
         <activity
-            android:name=".ui.guidelines.GuidelinesActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.guidelines.GuidelinesActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".ui.motion_layout_guides.MotionLayoutGuidesActivity"
+            android:exported="false">
         </activity>
     </application>
 

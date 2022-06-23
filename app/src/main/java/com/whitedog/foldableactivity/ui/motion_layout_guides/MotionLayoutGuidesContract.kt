@@ -1,10 +1,10 @@
-package com.whitedog.foldableactivity.ui.guidelines
+package com.whitedog.foldableactivity.ui.motion_layout_guides
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.whitedog.foldable_activity.enums.FoldPosture
 
-interface GuidelinesContract {
+interface MotionLayoutGuidesContract {
 
     interface View {
         fun onCreate(savedInstanceState: Bundle?)
@@ -26,5 +26,4 @@ interface GuidelinesContract {
 
         fun onDestroy()
     }
-
 }

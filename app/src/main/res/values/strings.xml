@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">FoldableActivity</string>
 
+    <string name="with_guidelines">With Guidelines</string>
+    <string name="with_motion_layout_guides">With Motion Layout + Guides</string>
+    <string name="with_motion_layout_states">With Motion Layout + States</string>
+
+    <string name="guidelines">Guidelines</string>
+    <string name="motion_layout_guides">Motion Layout + Guides</string>
+    <string name="motion_layout_states">Motion Layout + States</string>
+
     <string name="normal_content">NORMAL CONTENT</string>
     <string name="book_content">BOOK CONTENT</string>
     <string name="tabletop_content">TABLETOP CONTENT</string>

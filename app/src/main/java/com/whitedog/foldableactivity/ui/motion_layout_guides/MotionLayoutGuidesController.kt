@@ -1,13 +1,16 @@
-package com.whitedog.foldableactivity.ui.guidelines
+package com.whitedog.foldableactivity.ui.motion_layout_guides
 
 import android.content.Context
 import com.whitedog.foldable_activity.enums.FoldPosture
 
-class GuidelinesController(private val context: Context, private val view: GuidelinesContract.View, private val viewModel: GuidelinesViewModel): GuidelinesContract.Controller {
+class MotionLayoutGuidesController(private val context: Context, private val view: MotionLayoutGuidesContract.View, private val viewModel: MotionLayoutGuidesViewModel): MotionLayoutGuidesContract.Controller {
 
     override fun onCreate() {
         viewModel.foldPosture.observe(view.getActivity()) { posture ->
-            view.updateUI(posture, viewModel.foldPosition)
+            if(viewModel.updateUI) {
+                viewModel.updateUI = false
+                view.updateUI(posture, viewModel.foldPosition)
+            }
         }
     }
 
@@ -20,6 +23,7 @@ class GuidelinesController(private val context: Context, private val view: Guide
     //-----------------------------------------------------------------------------------
 
     override fun onFoldablePostureChanged(foldPosture: FoldPosture, foldPosition: Int) {
+        viewModel.updateUI = true
         viewModel.foldPosition = foldPosition
         viewModel.foldPosture.postValue(foldPosture)
     }

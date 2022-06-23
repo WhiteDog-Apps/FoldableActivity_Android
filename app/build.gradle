@@ -12,7 +12,7 @@ android {
         applicationId "com.whitedog.foldableactivity"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 1000400
+        versionCode 1000401
         versionName "1.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

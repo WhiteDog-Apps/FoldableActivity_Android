@@ -5,23 +5,20 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View" />
-        <import type="com.whitedog.foldable_activity.enums.FoldPosture" />
-
         <variable
             name="controller"
-            type="com.whitedog.foldableactivity.ui.guidelines.GuidelinesContract.Controller" />
+            type="com.whitedog.foldableactivity.ui.motion_layout_guides.MotionLayoutGuidesContract.Controller" />
 
         <variable
             name="viewModel"
-            type="com.whitedog.foldableactivity.ui.guidelines.GuidelinesViewModel" />
+            type="com.whitedog.foldableactivity.ui.motion_layout_guides.MotionLayoutGuidesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_guidelines_root"
+        android:id="@+id/cl_motion_layout_guides_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.guidelines.GuidelinesActivity">
+        tools:context=".ui.motion_layout_guides.MotionLayoutGuidesActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
@@ -40,97 +37,108 @@
                 android:minHeight="?attr/actionBarSize"
                 app:navigationIcon="@drawable/ic_back_24"
                 app:onNavigationClick="@{() -> controller.onBackClick()}"
-                app:title="@string/guidelines" />
+                app:title="@string/motion_layout_guides" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_guidelines_content"
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/cl_motion_layout_guides_content"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:layoutDescription="@xml/activity_motion_layout_guides_xml_constraintlayout_scene"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_guidelines_flat"
+                android:id="@+id/cl_motion_layout_guides_flat"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/rg_motion_layout_guides_tabletop"
+                app:layout_constraintEnd_toStartOf="@+id/rg_motion_layout_guides_book"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/gl_guidelines_book"
-                app:layout_constraintBottom_toTopOf="@+id/gl_guidelines_tabletop">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/normal_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/gl_guidelines_tabletop"
+            <androidx.constraintlayout.widget.ReactiveGuide
+                android:id="@+id/rg_motion_layout_guides_tabletop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_end="0dp" />
+                app:reactiveGuide_animateChange="true"
+                app:reactiveGuide_applyToAllConstraintSets="true"
+                app:reactiveGuide_valueId="@id/rg_motion_layout_guides_tabletop"
+                app:layout_constraintGuide_end="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/gl_guidelines_book"
+            <androidx.constraintlayout.widget.ReactiveGuide
+                android:id="@+id/rg_motion_layout_guides_book"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_end="0dp" />
+                app:reactiveGuide_animateChange="true"
+                app:reactiveGuide_applyToAllConstraintSets="true"
+                app:reactiveGuide_valueId="@id/rg_motion_layout_guides_book"
+                app:layout_constraintGuide_end="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_guidelines_tabletop"
+                android:id="@+id/cl_motion_layout_guides_tabletop"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:visibility="@{viewModel.foldPosture == FoldPosture.TABLE_TOP ? View.VISIBLE : View.GONE}"
                 android:background="#0000ff"
-                app:layout_constraintTop_toBottomOf="@+id/gl_guidelines_tabletop"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rg_motion_layout_guides_tabletop">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tabletop_content"
                     android:textColor="#ffffff"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_guidelines_book"
+                android:id="@+id/cl_motion_layout_guides_book"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:visibility="@{viewModel.foldPosture == FoldPosture.BOOK ? View.VISIBLE : View.GONE}"
                 android:background="#ff0000"
-                app:layout_constraintStart_toEndOf="@+id/gl_guidelines_book"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintStart_toEndOf="@+id/rg_motion_layout_guides_book"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/book_content"
                     android:textColor="#ffffff"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.motion.widget.MotionLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

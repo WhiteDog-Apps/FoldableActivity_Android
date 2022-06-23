@@ -1,30 +1,29 @@
-package com.whitedog.foldableactivity.ui.guidelines
+package com.whitedog.foldableactivity.ui.motion_layout_guides
 
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintSet
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
-import androidx.transition.TransitionManager
 import com.whitedog.foldable_activity.enums.FoldPosture
 import com.whitedog.foldable_activity.ui.FoldableActivity
 import com.whitedog.foldableactivity.R
-import com.whitedog.foldableactivity.databinding.ActivityGuidelinesBinding
+import com.whitedog.foldableactivity.databinding.ActivityMotionLayoutGuidesBinding
 
-class GuidelinesActivity : FoldableActivity(), GuidelinesContract.View {
+class MotionLayoutGuidesActivity : FoldableActivity(), MotionLayoutGuidesContract.View {
 
-    private lateinit var binding: ActivityGuidelinesBinding
-    private lateinit var controller: GuidelinesContract.Controller
+    private lateinit var binding: ActivityMotionLayoutGuidesBinding
+    private lateinit var controller: MotionLayoutGuidesContract.Controller
 
-    private val viewModel: GuidelinesViewModel by viewModels()
+    private val viewModel: MotionLayoutGuidesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        controller = GuidelinesController(applicationContext, this, viewModel)
+        controller = MotionLayoutGuidesController(applicationContext, this, viewModel)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_guidelines)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_motion_layout_guides)
         binding.controller = controller
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
@@ -41,32 +40,26 @@ class GuidelinesActivity : FoldableActivity(), GuidelinesContract.View {
     //-----------------------------------------------------------------------------------
 
     override fun getRootView(): View {
-        return binding.clGuidelinesRoot
+        return binding.clMotionLayoutGuidesRoot
     }
 
     //-----------------------------------------------------------------------------------
 
     override fun updateUI(foldPosture: FoldPosture, position: Int) {
-        val constraintSet: ConstraintSet = ConstraintSet()
-        constraintSet.clone(binding.clGuidelinesContent)
-
         when(foldPosture) {
             FoldPosture.TABLE_TOP -> {
-                constraintSet.setGuidelineEnd(R.id.gl_guidelines_tabletop, position)
-                constraintSet.setGuidelineEnd(R.id.gl_guidelines_book, 0)
+                ConstraintLayout.getSharedValues().fireNewValue(R.id.rg_motion_layout_guides_tabletop, position)
+                ConstraintLayout.getSharedValues().fireNewValue(R.id.rg_motion_layout_guides_book, 0)
             }
             FoldPosture.BOOK      -> {
-                constraintSet.setGuidelineEnd(R.id.gl_guidelines_tabletop, 0)
-                constraintSet.setGuidelineEnd(R.id.gl_guidelines_book, position)
+                ConstraintLayout.getSharedValues().fireNewValue(R.id.rg_motion_layout_guides_tabletop, 0)
+                ConstraintLayout.getSharedValues().fireNewValue(R.id.rg_motion_layout_guides_book, position)
             }
             else                  -> {
-                constraintSet.setGuidelineEnd(R.id.gl_guidelines_tabletop, 0)
-                constraintSet.setGuidelineEnd(R.id.gl_guidelines_book, 0)
+                ConstraintLayout.getSharedValues().fireNewValue(R.id.rg_motion_layout_guides_tabletop, 0)
+                ConstraintLayout.getSharedValues().fireNewValue(R.id.rg_motion_layout_guides_book, 0)
             }
         }
-
-        TransitionManager.beginDelayedTransition(binding.clGuidelinesContent)
-        constraintSet.applyTo(binding.clGuidelinesContent)
     }
 
     //-----------------------------------------------------------------------------------
