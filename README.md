@@ -4,9 +4,10 @@
 Android library that simplifies the logic necessary to detect state changes in foldable devices,
 
 ## Setup
-#### 1. Add the JitPack repository to your build file if you didn't add before.
+#### 1. Add the JitPack repository to your "settings.gradle" file if you didn't add before.
 ```gradle
-allprojects {
+dependencyResolutionManagement {
+    ...
     repositories {
         ...
         maven { url 'https://jitpack.io' }
