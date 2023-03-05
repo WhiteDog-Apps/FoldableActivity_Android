@@ -6,6 +6,9 @@ Android library that simplifies the logic necessary to detect state changes in f
 ## Setup
 #### 1. Add the JitPack repository to your "settings.gradle" file if you didn't add before.
 ```gradle
+pluginManagement {
+...
+}
 dependencyResolutionManagement {
     ...
     repositories {
@@ -13,6 +16,7 @@ dependencyResolutionManagement {
         maven { url 'https://jitpack.io' }
     }
 }
+...
 ```
 
 #### 2. Add the dependency
