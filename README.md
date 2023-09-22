@@ -4,14 +4,19 @@
 Android library that simplifies the logic necessary to detect state changes in foldable devices,
 
 ## Setup
-#### 1. Add the JitPack repository to your build file if you didn't add before.
+#### 1. Add the JitPack repository to your "settings.gradle" file if you didn't add before.
 ```gradle
-allprojects {
+pluginManagement {
+...
+}
+dependencyResolutionManagement {
+    ...
     repositories {
         ...
         maven { url 'https://jitpack.io' }
     }
 }
+...
 ```
 
 #### 2. Add the dependency
@@ -32,12 +37,12 @@ class MainActivity: FoldableActivity() {
 #### 2.  Implements members
 ```kotlin
     override fun getRootView(): View {
-        // Return the view where you will control the fold
-    }
+    // Return the view where you will control the fold
+}
 
-    override fun onFoldablePostureChanged(foldPosture: FoldPosture, foldPositionFromEnd: Int) {
-        // Update UI
-    }
+override fun onFoldablePostureChanged(foldPosture: FoldPosture, foldPositionFromEnd: Int) {
+    // Update UI
+}
 ```
 
 ## Example
@@ -54,7 +59,7 @@ class MainActivity: FoldableActivity() {
     override fun getRootView(): View {
         return findViewById<ConstraintLayout>(R.id.motion_layout_guides_root)
     }
-    
+
     override fun onFoldablePostureChanged(foldPosture: FoldPosture, foldPositionFromEnd: Int) {
         when(foldPosture) {
             FoldPosture.TABLE_TOP -> {
